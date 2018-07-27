@@ -4,7 +4,7 @@ import { APP_BASE_HREF } from '@angular/common';
 
 import { RouterTestingModule } from '@angular/router/testing';
 
-import { SkyPagesModule } from '../../../src/app/sky-pages.module';
+import { SkyPagesModule } from '@blackbaud/skyux-builder/src/app/sky-pages.module';
 
 import { SkyAppResourcesService } from '@skyux/i18n';
 
