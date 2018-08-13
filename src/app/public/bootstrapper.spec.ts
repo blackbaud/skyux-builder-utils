@@ -1,4 +1,6 @@
-import { SkyAppBootstrapper } from './bootstrapper';
+import {
+  SkyAppBootstrapper
+} from './bootstrapper';
 
 import {
   BBAuth,
@@ -65,6 +67,11 @@ describe('bootstrapper', () => {
     ensureContext.and.stub();
     historyReplaceStateSpy.and.callThrough();
     getUrlSpy.and.callThrough();
+  });
+
+  it('should export a class', () => {
+    const bootstrapper = new SkyAppBootstrapper();
+    expect(bootstrapper).toBeDefined();
   });
 
   it('should immediately resolve if SkyAppConfig.config.skyux.auth is not set', (done) => {
