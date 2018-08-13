@@ -1,6 +1,6 @@
 {
   "name": "@skyux/builder-utils",
-  "version": "0.0.1",
+  "version": "3.0.0-alpha.0",
   "description": "SKY UX Builder Utils",
   "main": "bundles/bundle.umd.js",
   "module": "index.ts",
@@ -39,7 +39,6 @@
     "@angular/platform-browser-dynamic": "4.3.6",
     "@angular/router": "4.3.6",
     "@blackbaud/auth-client": "2.7.0",
-    "@blackbaud/skyux-design-tokens": "0.0.8",
     "@blackbaud/skyux-builder": "blackbaud/skyux-builder#rc-2.0.0",
     "@skyux/theme": "3.0.0-alpha.3",
     "core-js": "2.4.1",
