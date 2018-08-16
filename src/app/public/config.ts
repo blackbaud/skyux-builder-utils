@@ -49,7 +49,6 @@ export interface RuntimeConfig {
   runtimeAlias: string;
   spaPathAlias: string;
   skyPagesOutAlias: string;
-  skyuxPathAlias: string;
   srcPath: string;
   useTemplateUrl: boolean;
 }
@@ -61,6 +60,7 @@ export interface SkyuxConfigA11y {
 export interface SkyuxConfigApp {
   externals?: Object;
   port?: string;
+  styles?: string[];
   title?: string;
 }
 
@@ -77,10 +77,8 @@ export interface SkyuxConfig {
   codeCoverageThreshold?: 'none' | 'standard' | 'strict';
   command?: string;
   compileMode?: string;
-  cssPath?: string;
   help?: any;
   host?: SkyuxConfigHost;
-  importPath?: string;
   mode?: string;
   name?: string;
   pacts?: any[];
@@ -94,7 +92,6 @@ export interface SkyuxConfig {
   testSettings?: SkyuxConfigTestSettings;
   omnibar?: any;
   useHashRouting?: boolean;
-  skyuxModules?: string[];
 }
 
 @Injectable()
