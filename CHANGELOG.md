@@ -1,3 +1,7 @@
+# 3.0.0-alpha.2 (2018-08-16)
+
+- Reverted breaking changes, to keep pace with Builder `1.19.3`. [#7](https://github.com/blackbaud/skyux-builder-utils/pull/7)
+
 # 3.0.0-alpha.1 (2018-08-14)
 
 - Removed `SkyAppWindowRef` and `SkyAppViewportService` because they do not fit within the scope of the library. [#3](https://github.com/blackbaud/skyux-builder-utils/pull/3)
