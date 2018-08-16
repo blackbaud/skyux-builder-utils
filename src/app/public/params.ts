@@ -40,32 +40,44 @@ export class SkyAppRuntimeConfigParams {
     url: string,
     configParams: SkyuxConfigParams
   ) {
-    const allowed: string[] = [];
+    let allowed: string[];
 
-    for (const paramName of Object.keys(configParams)) {
-      const configParam = configParams[paramName];
+    // The default params value in Builder's skyuxconfig.json has been changed
+    // from an array to an object to support more metadata about each parameter,
+    // including the parameter's default value and possible future properties
+    // like required. Check for an array first to maintain backwards compatibility
+    // with the previous default value and any consumers who may be overriding the
+    // value until we release builder 2.0.
+    if (Array.isArray(configParams)) {
+      allowed = configParams;
+    } else {
+      allowed = [];
 
-      // The config param could be present but be set to false/undefined indicating
-      // an override of the default parameter.
-      if (configParam) {
-        allowed.push(paramName);
+      for (const paramName of Object.keys(configParams)) {
+        const configParam = configParams[paramName];
 
-        // A boolean value may be present to simply indicate that a parameter is allowed.
-        // If the type is object, look for additional config properties.
-        if (typeof configParam === 'object') {
-          const paramValue = configParam.value;
+        // The config param could be present but be set to false/undefined indicating
+        // an override of the default parameter.
+        if (configParam) {
+          allowed.push(paramName);
 
-          if (configParam.required) {
-            this.requiredParams.push(paramName);
-          }
+          // A boolean value may be present to simply indicate that a parameter is allowed.
+          // If the type is object, look for additional config properties.
+          if (typeof configParam === 'object') {
+            const paramValue = configParam.value;
 
-          if (paramValue) {
-            this.params[paramName] = paramValue;
-            this.defaultParamValues[paramName] = paramValue;
-          }
+            if (configParam.required) {
+              this.requiredParams.push(paramName);
+            }
 
-          if (configParam.excludeFromRequests) {
-            this.excludeFromRequestsParams.push(paramName);
+            if (paramValue) {
+              this.params[paramName] = paramValue;
+              this.defaultParamValues[paramName] = paramValue;
+            }
+
+            if (configParam.excludeFromRequests) {
+              this.excludeFromRequestsParams.push(paramName);
+            }
           }
         }
       }
@@ -125,11 +137,20 @@ export class SkyAppRuntimeConfigParams {
    * Returns the value of the requested param.
    * @name get
    * @param {string} key The parameter's key.
+   * @param {boolean} urlDecode A flag indicating whether the value should be URL-decoded.
+   * Specify true when you anticipate the value of the parameter coming from the page's URL.
    * @returns {string}
    */
-  public get(key: string): string {
+  public get(key: string, urlDecode?: boolean): string {
     if (this.has(key)) {
-      return decodeURIComponent(this.params[key]);
+      let val = this.params[key];
+
+      // This should be changed to always decode encoded params in skyux-builder 2.0.
+      if (urlDecode && this.encodedParams.indexOf(key) >= 0) {
+        val = decodeURIComponent(val);
+      }
+
+      return val;
     }
   }
 
@@ -176,7 +197,7 @@ export class SkyAppRuntimeConfigParams {
         this.excludeFromRequestsParams.indexOf(key) === -1 &&
         !urlSearchParams.has(key)
       ) {
-        joined.push(`${key}=${encodeURIComponent(this.get(key))}`);
+        joined.push(`${key}=${encodeURIComponent(this.get(key, true))}`);
       }
     });
 

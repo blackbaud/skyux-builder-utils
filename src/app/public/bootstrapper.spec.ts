@@ -1,6 +1,4 @@
-import {
-  SkyAppBootstrapper
-} from './bootstrapper';
+import { SkyAppBootstrapper } from './bootstrapper';
 
 import {
   BBAuth,
@@ -35,7 +33,7 @@ describe('bootstrapper', () => {
 
       SkyAppBootstrapper.config = {
         auth: true,
-        params: {}
+        params: []
       };
 
       SkyAppBootstrapper.processBootstrapConfig().then(() => {
@@ -69,14 +67,9 @@ describe('bootstrapper', () => {
     getUrlSpy.and.callThrough();
   });
 
-  it('should export a class', () => {
-    const bootstrapper = new SkyAppBootstrapper();
-    expect(bootstrapper).toBeDefined();
-  });
-
   it('should immediately resolve if SkyAppConfig.config.skyux.auth is not set', (done) => {
     SkyAppBootstrapper.config = {
-      params: {}
+      params: []
     };
 
     SkyAppBootstrapper.processBootstrapConfig().then(done);
@@ -88,7 +81,7 @@ describe('bootstrapper', () => {
 
     SkyAppBootstrapper.config = {
       auth: true,
-      params: {}
+      params: []
     };
 
     SkyAppBootstrapper.processBootstrapConfig().then(() => {

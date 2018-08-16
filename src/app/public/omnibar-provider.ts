@@ -8,5 +8,7 @@ import {
 
 @Injectable()
 export abstract class SkyAppOmnibarProvider {
+
   public abstract ready(): Promise<SkyAppOmnibarReadyArgs>;
+
 }
